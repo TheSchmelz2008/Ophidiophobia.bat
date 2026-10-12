@@ -1,17 +1,66 @@
 @echo off
-color 0a
+cd /d "%~dp0"
+if not exist C:\Ophidiophobia\Saves\notnew.dat goto setup
+goto menu
+:setup
+echo Making Ophidiophobia Files...
+if not exist C:\Ophidiophobia\ md C:\Ophidiophobia\
+if not exist C:\Ophidiophobia\saves\ md C:\Ophidiophobia\saves\
+cd /d C:\Ophidiophobia\
 :menu
+cls
+echo.>> C:\Ophidiophobia\saves\notnew.dat
+cd /d C:\Ophidiophobia\
+color 0a
 echo By TheSchmelz2008
 echo =================
 echo = Ophidiophobia =
 echo =================
 echo 1 - Begin
-echo 2 - Close
+echo 2 - Load Saves
+echo 3 - Close
 set /p choice=Choose an option:
 
 if "%choice%"=="1" goto execute.Begin
-if "%choice%"=="2" goto execute.close
+if "%choice%"=="2" goto savemenu
+if "%choice%"=="3" goto execute.close
+if "%choice%"=="debug=1" goto cmdprompt
 goto menu
+
+:savemenu
+cls
+echo Finding save files...
+
+:: Reset save variable
+set l=
+
+:: Check each save
+if exist C:\Ophidiophobia\saves\l1.dat set l=1
+if exist C:\Ophidiophobia\saves\l2.dat set l=2
+if exist C:\Ophidiophobia\saves\l3.dat set l=3
+if exist C:\Ophidiophobia\saves\l4.dat set l=4
+if exist C:\Ophidiophobia\saves\l5.dat set l=5
+
+:: If no save found
+if "%l%"=="" goto sad
+
+echo Found save files/folder! Loading save files...
+
+if "%l%"=="1" goto menu1
+if "%l%"=="2" goto menu2
+if "%l%"=="3" goto menu3
+if "%l%"=="4" goto menu8213
+if "%l%"=="5" goto menuDanger
+
+pause
+exit
+
+:cmdprompt
+cls
+:cmd1
+set /p cmd=
+%cmd%
+goto cmd1
 
 :execute.close
 exit
@@ -38,6 +87,7 @@ goto menu
 :execute.attacks1
 echo The spider tries to dodge, but your knife nails it!
 :menu1
+echo.>> C:\Ophidiophobia\saves\l1.dat
 echo 5 - Rest (30% survival rate)
 echo 6 - Continue Traveling (30% survival rate)
 set /p choice=Choose an option:
@@ -58,6 +108,8 @@ echo You find a spot to rest and you successfully made it to day 2.
 echo Your goal now is to get a food supply and shelter. press enter to wake up
 pause
 :menu2
+del C:\Ophidiophobia\saves\l1.dat
+echo.>> C:\Ophidiophobia\saves\l2.dat
 echo You spot a chicken, a pig, and a cow. 2 of them will be hostile if you try to attack. One of them is an elderly and will let you eat them for your
 echo survival.
 echo 7 - the chicken
@@ -87,6 +139,8 @@ echo The cow is very old for a cow, he is ready. You have a good lunch. Press en
 pause
 echo The next step is to build a shelter
 :menu3
+del C:\Ophidiophobia\saves\l2.dat
+echo.>> C:\Ophidiophobia\saves\l3.dat
 echo Choose where to build your shelter!
 echo 1 - Middle of forest (Lots of expansion + Possible spider encounters)
 echo 2 - Next to the river (A way better water source + Rare venomous snake encounters)
@@ -152,6 +206,8 @@ pause
 echo You walk into the room and what erupts from the ground is none other then a giant snake.
 pause
 :menu8213
+del C:\Ophidiophobia\saves\l3.dat
+echo.>> C:\Ophidiophobia\saves\l4.dat
 echo Snake: 'ello what may be a friend or fresh meat. Y'nkow when i was a little snake, I would run along in a cave exploring! look at me now!
 echo 1 - Hah! Nice!
 echo 2 - You think we are gonna have a good convo?
@@ -180,6 +236,8 @@ echo No one is powerful enough to beat me.
 pause
 echo Let's begin the fun shall we?
 :menuDanger
+del C:\Ophidiophobia\saves\l4.dat
+echo.>> C:\Ophidiophobia\saves\l5.dat
 echo This is the decision of the century. You must get this.
 echo 1 - Attack
 echo 2 - Wait for attack and dodge to squeeze in a guaranteed hit
@@ -208,3 +266,9 @@ pause
 echo You Win! Enter to close the game
 pause
 exit
+
+:sad
+cls
+echo No save files Detected :\
+pause
+goto menu
