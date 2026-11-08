@@ -1,2 +1,0 @@
-# Ophidiophobia.bat
-game
